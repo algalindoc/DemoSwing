@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ClienteFormulario extends JFrame {
+public class ClienteFormulario extends JFrame implements ActionListener {
     private JTextField nameField;
     private JTextField addressField;
     private JTextField emailField;
@@ -40,19 +40,7 @@ public class ClienteFormulario extends JFrame {
         // Panel de botones
         JPanel buttonPanel = new JPanel();
         JButton createButton = new JButton("Create");
-        createButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (nameField.getText().isEmpty() || addressField.getText().isEmpty()
-                        || emailField.getText().isEmpty()) {
-                    successLabel.setText("Por favor, rellene todos los campos");
-                    successLabel.setForeground(Color.red);
-                    return;
-                } else {
-                    successLabel.setText("Cliente " + nameField.getText() + " creado exitosamente!");
-                    successLabel.setForeground(Color.blue);
-                }
-            }
-        });
+        createButton.addActionListener(this);
         buttonPanel.add(createButton);
 
         JButton cancelButton = new JButton("Cancel");
@@ -72,11 +60,21 @@ public class ClienteFormulario extends JFrame {
         setVisible(true);
     }
 
+    public void actionPerformed(ActionEvent e) {
+        if (nameField.getText().isEmpty() || addressField.getText().isEmpty()
+                || emailField.getText().isEmpty()) {
+            successLabel.setText("Por favor, rellene todos los campos");
+            successLabel.setForeground(Color.red);
+            return;
+        } else {
+            successLabel.setText("Cliente " + nameField.getText() + " creado exitosamente!");
+            successLabel.setForeground(Color.blue);
+        }
+    }
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new ClienteFormulario();
-            }
-        });
+
+        new ClienteFormulario();
+
     }
 }
